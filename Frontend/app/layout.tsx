@@ -8,24 +8,24 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'KBTech Pvt. Ltd.',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  description: 'Created with Kanan Biotech',
+  generator: 'KananBiotech.com',
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
+        url: '/KananBiotechLogo.jpeg',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/icon-dark-32x32.png',
+        url: '/KananBiotechLogo.jpeg',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/icon.svg',
+        url: '/KananBiotechLogo.jpeg',
         type: 'image/svg+xml',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: '/KananBiotechLogo.jpeg',
   },
 }
 
