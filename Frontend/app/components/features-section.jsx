@@ -10,13 +10,13 @@ const features = [
     href: "/feed-calculator",
     color: "bg-primary/10 text-primary",
   },
-  {
+  /*{
     icon: Cloud,
     title: "Weather Report",
     description: "Real-time weather updates with temperature, humidity, and farming recommendations.",
     href: "/weather",
     color: "bg-secondary/10 text-secondary",
-  },
+  },*/
   {
     icon: Users,
     title: "Farmer Connect",
@@ -24,13 +24,13 @@ const features = [
     href: "/farmer-connect",
     color: "bg-amber-100 text-amber-600",
   },
-  {
+  /*{
     icon: Package,
     title: "Product Catalog",
     description: "Browse our complete range of fish feed, medicines, and aquaculture supplies.",
     href: "/products",
     color: "bg-emerald-100 text-emerald-600",
-  },
+  },*/
   {
     icon: Pill,
     title: "Disease Guide",

@@ -14,10 +14,10 @@ export function CTASection() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/signup">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90">
+              {/*<Button size="lg" className="bg-white text-primary hover:bg-white/90">
                 Get Started Free
                 <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
+              </Button>*/}
             </Link>
             <Link href="/farmer-connect">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 bg-transparent">

@@ -12,10 +12,10 @@ export function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Products", href: "/products", hasDropdown: true },
+    /*{ name: "Products", href: "/products", hasDropdown: true },*/
     { name: "Diseases", href: "/diseases" },
     { name: "Feed Calculator", href: "/feed-calculator" },
-    { name: "Weather", href: "/weather" },
+    /*{ name: "Weather", href: "/weather" },*/
     { name: "Farmer Connect", href: "/farmer-connect" },
   ]
 
@@ -78,12 +78,12 @@ export function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <Link href="/login">
+            {/*<Link href="/login">
               <Button variant="ghost">Login</Button>
             </Link>
             <Link href="/signup">
               <Button>Sign Up</Button>
-            </Link>
+            </Link>*/}
           </div>
 
           <button className="lg:hidden p-2" onClick={() => setIsOpen(!isOpen)}>
@@ -106,14 +106,14 @@ export function Navbar() {
               </Link>
             ))}
             <div className="pt-4 flex flex-col gap-2">
-              <Link href="/login">
+              {/*<Link href="/login">
                 <Button variant="outline" className="w-full bg-transparent">
                   Login
                 </Button>
               </Link>
               <Link href="/signup">
                 <Button className="w-full">Sign Up</Button>
-              </Link>
+              </Link>*/}
             </div>
           </div>
         </div>

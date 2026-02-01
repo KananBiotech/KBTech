@@ -26,12 +26,12 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link
+                {/*<Link
                   href="/products"
                   className="text-sm text-muted-foreground hover:text-background transition-colors"
                 >
                   Products
-                </Link>
+                </Link> */}
               </li>
               <li>
                 <Link
@@ -50,9 +50,10 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                {/*
                 <Link href="/weather" className="text-sm text-muted-foreground hover:text-background transition-colors">
                   Weather Report
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
@@ -85,12 +86,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
+                {/*<Link
                   href="/products"
                   className="text-sm text-muted-foreground hover:text-background transition-colors"
                 >
                   Product Catalog
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
@@ -104,30 +105,30 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4" />
-                info@kananbiotech.com
+                kananbiotech@gmail.com
               </li>
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 mt-0.5" />
                 <span>
-                  123 Aqua Business Park,
+                  Debra, Kharagpur, Paschim Midnapore
                   <br />
-                  Chennai, Tamil Nadu 600001
+                  West Bengal, Pin-721126
                 </span>
               </li>
             </ul>
             <div className="flex gap-4 mt-6">
-              <a href="#" className="text-muted-foreground hover:text-background transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=61580163557719" className="text-muted-foreground hover:text-background transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-background transition-colors">
+              <a href="https://x.com/infokbtech" className="text-muted-foreground hover:text-background transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-background transition-colors">
+              <a href="https://www.linkedin.com/in/kanan-biotech-951a9b3a9/" className="text-muted-foreground hover:text-background transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-background transition-colors">
+              {/*<a href="#" className="text-muted-foreground hover:text-background transition-colors">
                 <Youtube className="w-5 h-5" />
-              </a>
+              </a>*/}
             </div>
           </div>
         </div>
