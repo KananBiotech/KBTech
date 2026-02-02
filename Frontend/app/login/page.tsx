@@ -21,22 +21,22 @@ export default function LoginPage() {
   const router = useRouter()
   const [state, action, pending] = useActionState(login, undefined)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
 
-    console.log("Email:", email)
-    console.log("password:", password)
+  //   console.log("Email:", email)
+  //   console.log("password:", password)
 
-    // const res = await fetch("/api/auth/login", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password
-    //   })
-    // })
+  //   // const res = await fetch("/api/auth/login", {
+  //   //   method: "POST",
+  //   //   body: JSON.stringify({
+  //   //     email: email,
+  //   //     password: password
+  //   //   })
+  //   // })
 
-    // if (res.ok) router.push("/dashboard")
-  }
+  //   // if (res.ok) router.push("/dashboard")
+  // }
 
   return (
     <main className="min-h-screen flex">
@@ -108,12 +108,11 @@ export default function LoginPage() {
                   <Label htmlFor="email">Email Address</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
+                    <input
                       id="email"
                       type="email"
+                      name="email"
                       placeholder="john@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
                       className="pl-10"
                       required
                     />
@@ -130,12 +129,11 @@ export default function LoginPage() {
                   </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
+                    <input
                       id="password"
+                      name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 pr-10"
                       required
                     />

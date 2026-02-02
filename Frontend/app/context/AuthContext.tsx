@@ -35,7 +35,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 });
             })
             .catch(err => {
-                console.log("No active session", err.response?.status);
                 setUser(null);
             })
             .finally(() => {

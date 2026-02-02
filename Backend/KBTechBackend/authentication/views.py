@@ -1,5 +1,4 @@
-import os
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.utils import timezone
 from dotenv import load_dotenv
 from .models import Users, Sessions
@@ -21,9 +20,21 @@ def login(request):
         email = request.data.get('email')
         password = request.data.get('password')
 
+        print("credentials", email, password)
+
+        if not email or not password:
+            return JsonResponse(status=404, data={
+                "message": "Invalid Credentials"
+            })
+
         existing_user = Users.objects.filter(email=email)[0]
+        print("existing user is: ", existing_user.first_name)
+        print(check_password(password=password, encoded=existing_user.password))
         if existing_user and check_password(password=password, encoded=existing_user.password):
-            existing_sessions = Sessions.objects.filter(userId=existing_user.id)
+            print("enterrrrrrr")
+            existing_sessions = Sessions.objects.filter(user_id=existing_user.id)
+
+            print("existing_sessions: ", existing_sessions)
 
             # Delete existing sessions 
             if existing_sessions:
@@ -31,11 +42,12 @@ def login(request):
                     session.delete() 
 
             session = {
-                "session": "",
                 "user_id": existing_user.id,
                 "expires_at": timezone.now() + timedelta(weeks=1),
                 "role": existing_user.role
             }
+
+            print(session)
 
             sesson_serializer = SessionSerializer(data=session)
 
@@ -47,9 +59,8 @@ def login(request):
             sesson_serializer.save()
 
             return JsonResponse(status=201, data={
-                "message": "User Logged In",
-                "user_id": existing_user.id,
-                "role": existing_user.role
+                "status": 201,
+                "session": sesson_serializer.data
             })
         
         else:
@@ -192,10 +203,11 @@ def save_session(request):
     )
 
 
+# Dev Only
 @csrf_exempt
 @api_view(['DELETE'])
 @permission_classes([AllowAny])
 def delete_all(request):
-    Users.objects.filter().delete()
+    # Users.objects.filter().delete()
     Sessions.objects.filter().delete()
     return HttpResponse("all users deleted.")
