@@ -1,27 +1,23 @@
-import React, { useContext } from "react";
-import axios from "axios";
-import { AuthContext, useAuth } from "../context/AuthContext";
+import React, { useTransition } from "react";
+import { useAuth } from "../context/AuthContext";
+import { logout } from "../actions/auth";
 
 const Logout = () => {
 
     const { setUser } = useAuth()
+    const [isPending, startTransition] = useTransition()
 
     const handleLogout = async () => {
-        try {
-            await axios.delete(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout/`,
-                { withCredentials: true }
-            );
-
-            setUser(null);
-        } catch (err: any) {
-            console.error("Logout failed", err.response?.data || err.message);
-        }
+        setUser(null);
+        startTransition(async () => {
+            await logout();
+        });
     };
 
     return (
         <button
-            onClick={handleLogout}
+            onClick={() => void handleLogout()}
+            disabled={isPending}
             className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white
                        transition-colors duration-200 hover:bg-red-600
                        focus:outline-none focus:ring-2 focus:ring-red-400

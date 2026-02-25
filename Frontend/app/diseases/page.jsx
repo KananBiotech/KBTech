@@ -279,6 +279,159 @@ const diseases = {
   ],
 }
 
+const speciesGuides = [
+  {
+    id: 101,
+    fishName: "Shrimp",
+    scientificName: "Penaeus vannamei / Penaeus monodon",
+    commonDisease: "White Spot Syndrome (WSSV)",
+    symptoms: ["White spots on shell", "Reduced feeding", "Weak movement", "Sudden heavy mortality"],
+    causes: ["Infected seed", "Poor biosecurity", "Stress from salinity/temperature fluctuation"],
+    solve: [
+      "Immediately isolate affected pond and stop water exchange with other ponds",
+      "Disinfect equipment and entry points with approved sanitizers",
+      "Improve aeration and stabilize water quality (pH, salinity, ammonia)",
+      "Use SPF seed and strict biosecurity for next cycle",
+    ],
+    prevention: ["Stock disease-free seed", "Quarantine new seed", "Regular PCR screening", "Maintain pond hygiene"],
+  },
+  {
+    id: 102,
+    fishName: "Scampi",
+    scientificName: "Macrobrachium rosenbergii",
+    commonDisease: "Shell Disease / Bacterial Lesions",
+    symptoms: ["Brown-black spots on shell", "Slow growth", "Weakness", "Poor molting"],
+    causes: ["Organic waste buildup", "High stocking density", "Poor water quality"],
+    solve: [
+      "Reduce organic load through siphoning and water management",
+      "Apply pond probiotics as per recommendation",
+      "Reduce stocking stress and maintain dissolved oxygen",
+      "Provide balanced mineral and vitamin support for molting",
+    ],
+    prevention: ["Regular bottom cleaning", "Proper feed management", "Avoid overstocking", "Routine water testing"],
+  },
+  {
+    id: 103,
+    fishName: "Pangasius (Pangasias)",
+    scientificName: "Pangasianodon hypophthalmus",
+    commonDisease: "Motile Aeromonas Septicemia",
+    symptoms: ["Red patches on body", "Ulcers", "Abdominal swelling", "Erratic swimming"],
+    causes: ["Aeromonas infection", "Poor water quality", "Handling stress"],
+    solve: [
+      "Separate severely affected fish",
+      "Correct ammonia/nitrite and increase aeration",
+      "Use veterinarian-guided antibacterial treatment",
+      "Support recovery with high-quality feed and immunostimulants",
+    ],
+    prevention: ["Maintain clean water", "Minimize netting stress", "Use quality seed", "Periodic health checks"],
+  },
+  {
+    id: 104,
+    fishName: "Rohu (Rahu Fish)",
+    scientificName: "Labeo rohita",
+    commonDisease: "Argulosis (Fish Lice)",
+    symptoms: ["Rubbing against pond wall", "Visible parasites on skin", "Red wounds", "Reduced feeding"],
+    causes: ["Parasitic infestation", "Entry of wild carrier fish", "Poor pond hygiene"],
+    solve: [
+      "Treat whole pond under expert supervision for ectoparasites",
+      "Improve pond sanitation and remove debris",
+      "Apply lime where recommended and maintain pH balance",
+      "Monitor fish for secondary bacterial infection",
+    ],
+    prevention: ["Screen inlet water", "Quarantine new stock", "Regular parasite monitoring", "Dry pond between cycles"],
+  },
+  {
+    id: 105,
+    fishName: "Catla (Katla Fish)",
+    scientificName: "Catla catla",
+    commonDisease: "Gill Rot",
+    symptoms: ["Rapid breathing", "Gasping at surface", "Pale/eroded gills", "Lethargy"],
+    causes: ["High organic load", "Low dissolved oxygen", "Bacterial/fungal gill infection"],
+    solve: [
+      "Increase aeration immediately",
+      "Reduce feeding and remove excess waste",
+      "Apply suitable gill-care treatment as advised",
+      "Maintain optimum water exchange and plankton balance",
+    ],
+    prevention: ["Avoid overfeeding", "Keep DO at safe level", "Regular gill checks", "Pond bottom management"],
+  },
+  {
+    id: 106,
+    fishName: "Mrigal Fish",
+    scientificName: "Cirrhinus mrigala",
+    commonDisease: "EUS (Epizootic Ulcerative Syndrome)",
+    symptoms: ["Red ulcers", "Deep wounds", "Scale loss", "Weak swimming"],
+    causes: ["Fungal invasion", "Monsoon stress", "Contaminated water"],
+    solve: [
+      "Isolate severely affected fish",
+      "Improve pond sanitation and apply liming program",
+      "Use antifungal support and secondary infection control as advised",
+      "Strengthen fish immunity with quality nutrition",
+    ],
+    prevention: ["Pond preparation before stocking", "Disinfect equipment", "Prevent sudden water quality swings"],
+  },
+  {
+    id: 107,
+    fishName: "Grass Carp (Grash carp)",
+    scientificName: "Ctenopharyngodon idella",
+    commonDisease: "Ich (White Spot Disease)",
+    symptoms: ["White pinhead spots", "Flashing/rubbing", "Fin clamping", "Loss of appetite"],
+    causes: ["Protozoan parasite", "Stress and temperature fluctuation"],
+    solve: [
+      "Treat pond for protozoan infestation in full cycle",
+      "Stabilize water temperature where possible",
+      "Improve water hygiene and reduce crowding",
+      "Continue observation after treatment to prevent relapse",
+    ],
+    prevention: ["Quarantine new fish", "Stable pond conditions", "Regular health inspection"],
+  },
+  {
+    id: 108,
+    fishName: "Amur Carp",
+    scientificName: "Cyprinus rubrofuscus (Amur strain)",
+    commonDisease: "Koi Herpes-like Viral Outbreak",
+    symptoms: ["Gill necrosis", "Sunken eyes", "Skin lesions", "Sudden deaths"],
+    causes: ["Viral transmission", "Carrier fish introduction", "Temperature stress"],
+    solve: [
+      "Strictly isolate affected stock and restrict movement",
+      "Disinfect nets, tanks, and transport units",
+      "Maintain optimal water quality to reduce stress load",
+      "Use certified healthy seed and avoid mixed-source stocking",
+    ],
+    prevention: ["Buy certified seed", "Quarantine new batches", "Separate tools per pond", "Routine surveillance"],
+  },
+  {
+    id: 109,
+    fishName: "Silver Carp",
+    scientificName: "Hypophthalmichthys molitrix",
+    commonDisease: "Bacterial Hemorrhagic Septicemia",
+    symptoms: ["Red hemorrhagic patches", "Fin base bleeding", "Lethargy", "Poor feeding"],
+    causes: ["Bacterial load in poor water", "High stress", "Abrupt environmental change"],
+    solve: [
+      "Improve water quality and increase dissolved oxygen",
+      "Remove dead/weak fish quickly",
+      "Apply expert-guided antibacterial treatment protocol",
+      "Support fish with high digestibility feed and vitamins",
+    ],
+    prevention: ["Routine pond water checks", "Balanced stocking", "Stress-free handling"],
+  },
+  {
+    id: 110,
+    fishName: "Mixed Carp Ponds (Rohu, Catla, Mrigal, Grass, Silver)",
+    scientificName: "Polyculture System",
+    commonDisease: "Ammonia Toxicity and Secondary Infections",
+    symptoms: ["Surface gasping", "Gill irritation", "Slow growth", "Frequent opportunistic diseases"],
+    causes: ["Overfeeding", "High stocking density", "Poor sludge management"],
+    solve: [
+      "Partial water exchange and strong aeration",
+      "Cut feed temporarily and restart with corrected ration",
+      "Apply probiotics and improve bottom management",
+      "Monitor ammonia, nitrite, pH daily until stable",
+    ],
+    prevention: ["Feed budgeting", "Regular siphoning/desludging", "Water quality logs", "Periodic health audit"],
+  },
+]
+
 export default function DiseasesPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [expandedDisease, setExpandedDisease] = useState(null)
@@ -295,6 +448,16 @@ export default function DiseasesPage() {
         disease.description.toLowerCase().includes(searchQuery.toLowerCase()),
     )
   }
+
+  const filteredSpeciesGuides = speciesGuides.filter((guide) => {
+    if (!searchQuery) return true
+    const q = searchQuery.toLowerCase()
+    return (
+      guide.fishName.toLowerCase().includes(q) ||
+      guide.commonDisease.toLowerCase().includes(q) ||
+      guide.description?.toLowerCase?.().includes?.(q)
+    )
+  })
 
   const DiseaseCard = ({ disease }) => {
     const isExpanded = expandedDisease === disease.id
@@ -418,6 +581,85 @@ export default function DiseasesPage() {
     )
   }
 
+  const SpeciesCard = ({ guide }) => {
+    return (
+      <Card className="border-0 shadow-md overflow-hidden">
+        <CardHeader className="bg-muted/30">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <CardTitle className="text-lg">{guide.fishName}</CardTitle>
+              <p className="text-sm text-muted-foreground">{guide.scientificName}</p>
+            </div>
+            <Badge variant="secondary">Species Guide</Badge>
+          </div>
+          <p className="text-sm mt-3">
+            <span className="font-semibold">Common Disease: </span>
+            {guide.commonDisease}
+          </p>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                <Thermometer className="w-4 h-4 text-rose-500" />
+                Symptoms
+              </h4>
+              <ul className="space-y-1 mb-5">
+                {guide.symptoms.map((item, i) => (
+                  <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-amber-500" />
+                Causes
+              </h4>
+              <ul className="space-y-1">
+                {guide.causes.map((item, i) => (
+                  <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                <Pill className="w-4 h-4 text-primary" />
+                How To Solve
+              </h4>
+              <ul className="space-y-1 mb-5">
+                {guide.solve.map((item, i) => (
+                  <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                <Shield className="w-4 h-4 text-secondary" />
+                Prevention
+              </h4>
+              <ul className="space-y-1">
+                {guide.prevention.map((item, i) => (
+                  <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
@@ -462,6 +704,9 @@ export default function DiseasesPage() {
             <TabsTrigger value="yearRound" className="gap-2">
               Year-Round Issues
             </TabsTrigger>
+            <TabsTrigger value="species" className="gap-2">
+              Species-Wise Guide
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="winter" className="space-y-4">
@@ -479,6 +724,12 @@ export default function DiseasesPage() {
           <TabsContent value="yearRound" className="space-y-4">
             {filterDiseases(diseases.yearRound).map((disease) => (
               <DiseaseCard key={disease.id} disease={disease} />
+            ))}
+          </TabsContent>
+
+          <TabsContent value="species" className="space-y-4">
+            {filteredSpeciesGuides.map((guide) => (
+              <SpeciesCard key={guide.id} guide={guide} />
             ))}
           </TabsContent>
         </Tabs>

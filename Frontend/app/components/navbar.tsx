@@ -2,16 +2,32 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Fish, ChevronDown } from "lucide-react"
+import { Menu, X, Fish, ChevronDown, User, History, CircleUserRound } from "lucide-react"
 import { Button } from "./ui/button"
 import { useAuth } from "../context/AuthContext"
-import Logout from "./Logout"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import { logout } from "../actions/auth"
+import { useTransition } from "react"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [showProducts, setShowProducts] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
-  const { user } = useAuth();
+  const { user, loading, setUser } = useAuth();
+
+  const handleLogout = async () => {
+    setUser(null)
+    startTransition(async () => {
+      await logout()
+    })
+  }
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -80,9 +96,43 @@ export function Navbar() {
             ))}
           </div>
 
-          {user ? (
+          {loading ? (
             <div className="hidden lg:flex items-center gap-3">
-              <Logout />
+              <div className="h-10 w-24 rounded-md bg-muted animate-pulse" />
+              <div className="h-10 w-24 rounded-md bg-muted animate-pulse" />
+            </div>
+          ) : user ? (
+            <div className="hidden lg:flex items-center gap-3">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="rounded-full px-3 bg-transparent">
+                    <CircleUserRound className="h-4 w-4" />
+                    <span className="ml-2">My Account</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40">
+                  <DropdownMenuItem asChild>
+                    <Link href="/account" className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/history" className="flex items-center gap-2">
+                      <History className="h-4 w-4" />
+                      History
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    disabled={isPending}
+                    onClick={() => void handleLogout()}
+                    className="text-red-600 focus:text-red-600"
+                  >
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           ) : (
             <div className="hidden lg:flex items-center gap-3">
@@ -114,19 +164,48 @@ export function Navbar() {
                 {link?.name}
               </Link>
             ))}
-            <div className="pt-4 flex flex-col gap-2">
-              <Link href="/login">
-                <Button variant="outline" className="w-full bg-transparent">
-                  Login
+            {loading ? (
+              <div className="pt-4 flex flex-col gap-2">
+                <div className="h-10 w-full rounded-md bg-muted animate-pulse" />
+                <div className="h-10 w-full rounded-md bg-muted animate-pulse" />
+              </div>
+            ) : user ? (
+              <div className="pt-4 flex flex-col gap-2">
+                <Link href="/account">
+                  <Button variant="outline" className="w-full bg-transparent">
+                    Account
+                  </Button>
+                </Link>
+                <Link href="/history">
+                  <Button variant="outline" className="w-full bg-transparent">
+                    History
+                  </Button>
+                </Link>
+                <Button
+                  className="w-full bg-red-500 hover:bg-red-600 text-white"
+                  onClick={() => void handleLogout()}
+                  disabled={isPending}
+                >
+                  Logout
                 </Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="w-full">Sign Up</Button>
-              </Link>
-            </div>
+              </div>
+            ) : (
+              <div className="pt-4 flex flex-col gap-2">
+                <Link href="/login">
+                  <Button variant="outline" className="w-full bg-transparent">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="w-full">Sign Up</Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
     </nav>
   )
 }
+
+

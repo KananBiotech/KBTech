@@ -7,36 +7,13 @@ import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { Checkbox } from "../components/ui/checkbox"
-import { Fish, Eye, EyeOff, ArrowLeft, Mail, Lock } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { Fish, Eye, EyeOff, ArrowLeft, Mail, Lock, Check } from "lucide-react"
 import { login } from "../actions/auth"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const router = useRouter()
   const [state, action, pending] = useActionState(login, undefined)
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault()
-
-  //   console.log("Email:", email)
-  //   console.log("password:", password)
-
-  //   // const res = await fetch("/api/auth/login", {
-  //   //   method: "POST",
-  //   //   body: JSON.stringify({
-  //   //     email: email,
-  //   //     password: password
-  //   //   })
-  //   // })
-
-  //   // if (res.ok) router.push("/dashboard")
-  // }
 
   return (
     <main className="min-h-screen flex">
@@ -71,7 +48,7 @@ export default function LoginPage() {
             ].map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-                  <span className="text-xs">✓</span>
+                  <Check className="w-4 h-4" />
                 </div>
                 <span>{feature}</span>
               </div>
@@ -108,7 +85,7 @@ export default function LoginPage() {
                   <Label htmlFor="email">Email Address</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
+                    <Input
                       id="email"
                       type="email"
                       name="email"
@@ -129,7 +106,7 @@ export default function LoginPage() {
                   </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
+                    <Input
                       id="password"
                       name="password"
                       type={showPassword ? "text" : "password"}
@@ -159,9 +136,10 @@ export default function LoginPage() {
                   </Label>
                 </div>
 
-                <Button type="submit" className="w-full" size="lg" disabled={isLoading || pending}>
-                  {isLoading ? "Signing in..." : "Sign In"}
+                <Button type="submit" className="w-full" size="lg" disabled={pending}>
+                  {pending ? "Signing in..." : "Sign In"}
                 </Button>
+                {state?.message && <p className="text-red-500 text-sm">{state.message}</p>}
 
                 <div className="relative my-6">
                   <div className="absolute inset-0 flex items-center">
@@ -227,3 +205,4 @@ export default function LoginPage() {
     </main>
   )
 }
+

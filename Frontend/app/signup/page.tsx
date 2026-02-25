@@ -1,62 +1,20 @@
 "use client"
-import React, { useActionState, useEffect, useState } from "react"
+import React, { useActionState, useState } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { Checkbox } from "../components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
 import { Fish, Eye, EyeOff, ArrowLeft, Mail, Lock, User, Phone, MapPin } from "lucide-react"
-import { type UserData } from "../types"
 import { signup } from "../actions/auth"
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [formData, setFormData] = useState<UserData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    state: "",
-    password: "",
-    confirmPassword: "",
-    farmType: "",
-  })
   const [acceptTerms, setAcceptTerms] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading] = useState(false)
 
   const [state, action, pending] = useActionState(signup, undefined)
-
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
-
-
-  // const handleChange = (field: keyof UserData, value: string) => {
-  //   setFormData((prev) => ({ ...prev, [field]: value }))
-  // }
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //     e.preventDefault()
-
-  //     if (formData.password === formData.confirmPassword) {
-  //         const res = await fetch("/api/auth/register", {
-  //             method: "POST",
-  //             body: JSON.stringify({
-  //                 first_name: formData.firstName,
-  //                 last_name: formData.lastName,
-  //                 email: formData.email,
-  //                 phone: formData.phone,
-  //                 state: formData.state,
-  //                 password: formData.password,
-  //                 farm_type: formData.farmType,
-  //             })
-  //         })
-
-  //         console.log(res)
-  //     }
-  // }
 
   return (
     <main className="min-h-screen flex">
@@ -128,12 +86,10 @@ export default function SignupPage() {
                     <Label htmlFor="firstName">First Name</Label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <input
+                      <Input
                         id="firstName"
                         placeholder="John"
                         name="firstName"
-                        // value={formData.firstName}
-                        // onChange={(e) => handleChange("firstName", e.target.value)}
                         className="pl-10"
                         required
                       />
@@ -142,12 +98,10 @@ export default function SignupPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
-                    <input
+                    <Input
                       id="lastName"
                       placeholder="Doe"
                       name="lastName"
-                      // value={formData.lastName}
-                      // onChange={(e) => handleChange("lastName", e.target.value)}
                       required
                     />
                     {state?.errors?.lastName && <p className="text-red-500 text-sm">{state.errors.lastName}</p>}
@@ -158,13 +112,11 @@ export default function SignupPage() {
                   <Label htmlFor="email">Email Address</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
+                    <Input
                       id="email"
                       type="email"
                       placeholder="john@example.com"
                       name="email"
-                      // value={formData.email}
-                      // onChange={(e) => handleChange("email", e.target.value)}
                       className="pl-10"
                       required
                     />
@@ -176,13 +128,11 @@ export default function SignupPage() {
                   <Label htmlFor="phone">Phone Number</Label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
+                    <Input
                       id="phone"
                       type="tel"
                       placeholder="+91 98765 43210"
                       name="phone"
-                      // value={formData.phone}
-                      // onChange={(e) => handleChange("phone", e.target.value)}
                       className="pl-10"
                       required
                     />
@@ -231,7 +181,7 @@ export default function SignupPage() {
                     id="farmType"
                     name="farmType"
                     required
-                    defaultValue={'pond Culture'}
+                    defaultValue="pond"
                     className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
                   >
                     <option value="" disabled>
@@ -253,21 +203,21 @@ export default function SignupPage() {
                   <Label htmlFor="password">Password</Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
+                    <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Create a strong password"
                       name="password"
-                      // value={formData.password}
-                      // onChange={(e) => handleChange("password", e.target.value)}
                       className="pl-10 pr-10"
                       required
                     />
-                    {state?.errors?.password && <p className="text-red-500 text-sm">{
-                      state.errors.password.map((error) => (
-                        <li key={error}>- {error}</li>
-                      ))
-                    }</p>}
+                    {state?.errors?.password && (
+                      <ul className="text-red-500 text-sm list-disc pl-4">
+                        {state.errors.password.map((error) => (
+                          <li key={error}>{error}</li>
+                        ))}
+                      </ul>
+                    )}
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -277,7 +227,7 @@ export default function SignupPage() {
                     </button>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Must be at least 8 characters with a number and special character
+                    Use at least 6 characters. Numeric-only passwords are also allowed.
                   </p>
                 </div>
 
@@ -290,12 +240,13 @@ export default function SignupPage() {
                       type="password"
                       placeholder="Confirm your password"
                       name="confirmPassword"
-                      // value={formData.confirmPassword}
-                      // onChange={(e) => handleChange("confirmPassword", e.target.value)}
                       className="pl-10"
                       required
                     />
                   </div>
+                  {state?.errors?.confirmPassword && (
+                    <p className="text-red-500 text-sm">{state.errors.confirmPassword}</p>
+                  )}
                 </div>
 
                 <div className="flex items-start space-x-2">
@@ -320,6 +271,11 @@ export default function SignupPage() {
                 <Button type="submit" className="w-full" size="lg" disabled={isLoading || !acceptTerms || pending}>
                   {isLoading ? "Creating Account..." : "Create Account"}
                 </Button>
+                {state?.message && (
+                  <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                    {state.message}
+                  </div>
+                )}
 
                 <div className="relative my-6">
                   <div className="absolute inset-0 flex items-center">

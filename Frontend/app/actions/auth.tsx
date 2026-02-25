@@ -7,6 +7,18 @@ import { redirect } from 'next/navigation'
 import { createSession, deleteSession } from '../lib/sessions.ts'
 import { SignupFormSchema, LoginFormSchema } from '../lib/definitions.ts'
 
+function normalizeBackendErrors(errors: Record<string, string[]>) {
+  return {
+    firstName: errors.first_name,
+    lastName: errors.last_name,
+    phone: errors.phone,
+    state: errors.state,
+    farmType: errors.farm_type,
+    email: errors.email,
+    password: errors.password,
+  }
+}
+
 export async function signup(formstate: FormState, formData: FormData) {
 
   // Validate form fields
@@ -18,6 +30,7 @@ export async function signup(formstate: FormState, formData: FormData) {
     farmType: formData.get('farmType'),
     email: formData.get('email'),
     password: formData.get('password'),
+    confirmPassword: formData.get('confirmPassword'),
   })
 
   const ROLE = 'user'
@@ -38,16 +51,32 @@ export async function signup(formstate: FormState, formData: FormData) {
   const { firstName, lastName, email, state, phone, farmType, password } = validatedFields.data;
 
   // 3. Insert the user into the database or call an Auth Library's API
-  const { data } = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/signup/`, {
-    firstName,
-    lastName,
-    email,
-    state,
-    phone,
-    farmType,
-    password,
-    ROLE
-  })
+  let data
+  try {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/signup/`, {
+      firstName,
+      lastName,
+      email,
+      state,
+      phone,
+      farmType,
+      password,
+      ROLE
+    })
+    data = response.data
+  } catch (error: any) {
+    const responseData = error?.response?.data
+    if (responseData?.errors) {
+      return {
+        errors: normalizeBackendErrors(responseData.errors),
+        message: 'Please fix the highlighted fields and try again.',
+      }
+    }
+
+    return {
+      message: responseData?.message || 'An error occurred while creating your account.',
+    }
+  }
 
   if (!data) {
     return {
@@ -78,10 +107,18 @@ export async function login(formstate: FormState, formData: FormData) {
 
   const { email, password } = validatedFields.data
 
-  const {data} = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login/`, {
-    email: email,
-    password: password,
-  })
+  let data
+  try {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login/`, {
+      email: email,
+      password: password,
+    })
+    data = response.data
+  } catch (error: any) {
+    return {
+      message: error?.response?.data?.message || 'Invalid email or password.',
+    }
+  }
 
   if (!data) {
     return {

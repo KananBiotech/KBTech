@@ -27,10 +27,15 @@ def login(request):
                 "message": "Invalid Credentials"
             })
 
-        existing_user = Users.objects.filter(email=email)[0]
+        existing_user = Users.objects.filter(email=email).first()
+        if not existing_user:
+            return JsonResponse(status=404, data={
+                "message": "User not found"
+            })
+
         print("existing user is: ", existing_user.first_name)
         print(check_password(password=password, encoded=existing_user.password))
-        if existing_user and check_password(password=password, encoded=existing_user.password):
+        if check_password(password=password, encoded=existing_user.password):
             print("enterrrrrrr")
             existing_sessions = Sessions.objects.filter(user_id=existing_user.id)
 
@@ -77,7 +82,7 @@ def login(request):
 def logout(request):
     try:
         session = request.COOKIES.get('session')
-        user_session = Sessions.objects.filter(session=session)[0]
+        user_session = Sessions.objects.filter(session=session).first()
 
         if not user_session:
             return JsonResponse(status=404, data={"message" : "Invalid Session"})
@@ -166,7 +171,11 @@ def verify(request):
             status=404
         )
 
-    user_session = Sessions.objects.filter(session=session)[0]
+    user_session = Sessions.objects.filter(session=session).first()
+    if not user_session:
+        return JsonResponse(data={
+            "message": "Invalid Session"
+        }, status=404)
 
     if user_session.expires_at < timezone.now():
         user_session.delete()
@@ -191,15 +200,26 @@ def save_session(request):
             {
                 "status": 404,
                 "message": "Parameter not found"
-            }
+            },
+            status=404
         )
 
-    Sessions.objects.filter(user_id=userId).update(session=session)
+    updated_count = Sessions.objects.filter(user_id=userId).update(session=session)
+    if updated_count == 0:
+        return JsonResponse(
+            {
+                "status": 404,
+                "message": "Session not found"
+            },
+            status=404
+        )
+
     return JsonResponse(
         {
-            "status": 500,
+            "status": 200,
             "message": "object modified"
-        }
+        },
+        status=200
     )
 
 

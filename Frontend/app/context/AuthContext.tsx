@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { SessionContext } from "../types"
 import axios from "axios"
+import { usePathname } from "next/navigation"
 
 type AuthContextType = {
     user: SessionContext | null,
@@ -20,9 +21,11 @@ export const AuthContext = createContext<AuthContextType>({
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<SessionContext | null>(null)
     const [loading, setLoading] = useState(true)
+    const pathname = usePathname()
     
     useEffect(() => {
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify/`, {
+        setLoading(true)
+        axios.get(`/api/auth/session/`, {
             withCredentials: true,
         })
             .then(res => {
@@ -40,7 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [pathname]);
 
 
     return (
