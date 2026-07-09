@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Fish, Mail } from "lucide-react"
+import Image from "next/image"
+import { ArrowLeft, Mail } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
@@ -18,12 +19,18 @@ export default function ForgotPasswordPage() {
           </Link>
 
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
-              <Fish className="w-8 h-8" />
+            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center p-1.5">
+              <Image
+                src="/images/kanan-logo.png"
+                alt="Kanan Biotech Pvt. Ltd. logo"
+                width={52}
+                height={52}
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
-              <div className="text-2xl font-bold">Kanan Biotech</div>
-              <div className="text-sm text-white/70">Pvt. Ltd</div>
+              <div className="text-2xl font-bold">KBTech Pvt. Ltd.</div>
+              <div className="text-sm text-white/70">by Kanan Biotech Pvt. Ltd.</div>
             </div>
           </div>
 

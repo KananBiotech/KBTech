@@ -2,12 +2,13 @@
 
 import React, { useActionState, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../components/ui/card"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { Checkbox } from "../components/ui/checkbox"
-import { Fish, Eye, EyeOff, ArrowLeft, Mail, Lock, Check } from "lucide-react"
+import { Eye, EyeOff, ArrowLeft, Mail, Lock, Check } from "lucide-react"
 import { login } from "../actions/auth"
 
 export default function LoginPage() {
@@ -25,12 +26,18 @@ export default function LoginPage() {
           </Link>
 
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
-              <Fish className="w-8 h-8" />
+            <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center p-1.5">
+              <Image
+                src="/images/kanan-logo.png"
+                alt="Kanan Biotech Pvt. Ltd. logo"
+                width={52}
+                height={52}
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
-              <div className="text-2xl font-bold">Kanan Biotech</div>
-              <div className="text-sm text-white/70">Pvt. Ltd</div>
+              <div className="text-2xl font-bold">KBTech Pvt. Ltd.</div>
+              <div className="text-sm text-white/70">by Kanan Biotech Pvt. Ltd.</div>
             </div>
           </div>
 
@@ -65,12 +72,18 @@ export default function LoginPage() {
           </Link>
 
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <Fish className="w-6 h-6 text-primary-foreground" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <Image
+                src="/images/kanan-logo.png"
+                alt="Kanan Biotech Pvt. Ltd. logo"
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain"
+              />
             </div>
             <div>
-              <div className="font-bold text-foreground">Kanan Biotech</div>
-              <div className="text-xs text-muted-foreground">Pvt. Ltd</div>
+              <div className="font-bold text-foreground">KBTech Pvt. Ltd.</div>
+              <div className="text-xs text-muted-foreground">by Kanan Biotech Pvt. Ltd.</div>
             </div>
           </div>
 
