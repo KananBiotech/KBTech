@@ -1,0 +1,244 @@
+/* ============================================================
+   styles.css — MediAssist AI (RAG Edition)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+:root {
+    --bg        : #080e1a;
+    --surface   : #0f1929;
+    --surface2  : #162033;
+    --border    : #1e2d42;
+    --accent    : #00d4ff;
+    --accent2   : #0099bb;
+    --green     : #00e676;
+    --red       : #ff4d6d;
+    --yellow    : #ffd600;
+    --purple    : #b39dff;
+    --text      : #dde6f0;
+    --muted     : #4a6080;
+}
+
+*, *::before, *::after          { box-sizing: border-box; }
+html, body, .stApp              { background: var(--bg) !important; color: var(--text); }
+.block-container                { padding: 1.5rem 2rem 4rem; max-width: 1100px; }
+#MainMenu, footer, header       { visibility: hidden; }
+
+body, p, div, span, label       { font-family: 'IBM Plex Sans', sans-serif; }
+code, .mono                     { font-family: 'IBM Plex Mono', monospace; }
+
+/* ── App Header ──────────────────────────────────────────── */
+.app-header {
+    background    : linear-gradient(135deg, #0c1b30 0%, #0f2540 100%);
+    border        : 1px solid rgba(0,212,255,0.35);
+    border-radius : 14px;
+    padding       : 1.1rem 2rem;
+    margin-bottom : 1.5rem;
+    display       : flex;
+    align-items   : center;
+    gap           : 1.2rem;
+    box-shadow    : 0 0 40px rgba(0,212,255,0.08);
+}
+.app-header h1 {
+    font-family   : 'IBM Plex Mono', monospace;
+    color         : var(--accent);
+    font-size     : 1.5rem;
+    font-weight   : 600;
+    letter-spacing: 3px;
+    margin        : 0;
+}
+.app-header p { color: var(--muted); font-size: 0.82rem; margin: 0; }
+
+/* ── Welcome Box ─────────────────────────────────────────── */
+.welcome-box {
+    background    : linear-gradient(135deg, #0c1b30, #112340);
+    border        : 1px solid rgba(0,212,255,0.2);
+    border-radius : 12px;
+    padding       : 1.5rem 2rem;
+    margin        : 0.5rem 0 1.5rem;
+    text-align    : center;
+}
+.welcome-box h2 {
+    color         : var(--accent);
+    font-family   : 'IBM Plex Mono', monospace;
+    letter-spacing: 2px;
+    margin        : 0 0 0.8rem;
+}
+.welcome-box p  { color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin: 0; }
+.feature-row    { display: flex; gap: 0.8rem; margin-top: 1.2rem; flex-wrap: wrap; justify-content: center; }
+.feature-chip {
+    background    : rgba(0,212,255,0.07);
+    border        : 1px solid rgba(0,212,255,0.2);
+    border-radius : 20px;
+    padding       : 5px 14px;
+    font-size     : 0.76rem;
+    color         : var(--accent);
+    font-family   : 'IBM Plex Mono', monospace;
+}
+.feature-chip.rag {
+    background    : rgba(179,157,255,0.1);
+    border-color  : rgba(179,157,255,0.3);
+    color         : var(--purple);
+}
+
+/* ── Chat Messages ───────────────────────────────────────── */
+.msg-wrap   { margin: 0.6rem 0; }
+.msg-user {
+    background    : var(--surface2);
+    border-left   : 3px solid var(--accent);
+    border-radius : 0 10px 10px 0;
+    padding       : 0.85rem 1.2rem;
+    font-size     : 0.92rem;
+    line-height   : 1.65;
+}
+.msg-ai {
+    background    : linear-gradient(135deg, #0c1a2e, #101f33);
+    border-left   : 3px solid var(--green);
+    border-radius : 0 10px 10px 0;
+    padding       : 0.85rem 1.2rem;
+    font-size     : 0.92rem;
+    line-height   : 1.75;
+}
+.msg-label {
+    font-family   : 'IBM Plex Mono', monospace;
+    font-size     : 0.68rem;
+    font-weight   : 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom : 0.45rem;
+}
+.lbl-user { color: var(--accent); }
+.lbl-ai   { color: var(--green);  }
+
+/* ── RAG Source Badge (shown on AI messages) ─────────────── */
+.rag-badge {
+    display       : inline-block;
+    background    : rgba(179,157,255,0.1);
+    border        : 1px solid rgba(179,157,255,0.3);
+    border-radius : 12px;
+    padding       : 2px 10px;
+    font-size     : 0.65rem;
+    color         : var(--purple);
+    font-family   : 'IBM Plex Mono', monospace;
+    margin-left   : 10px;
+    vertical-align: middle;
+}
+
+/* ── STG Reference Panel ─────────────────────────────────── */
+.stg-panel {
+    background    : rgba(179,157,255,0.05);
+    border        : 1px solid rgba(179,157,255,0.2);
+    border-radius : 8px;
+    padding       : 0.8rem 1rem;
+    margin        : 0.5rem 0 1rem;
+    font-size     : 0.8rem;
+}
+.stg-panel-title {
+    font-family   : 'IBM Plex Mono', monospace;
+    font-size     : 0.7rem;
+    color         : var(--purple);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom : 0.5rem;
+}
+.stg-ref {
+    background    : var(--surface2);
+    border-left   : 2px solid var(--purple);
+    border-radius : 0 6px 6px 0;
+    padding       : 0.5rem 0.8rem;
+    margin        : 0.3rem 0;
+    font-size     : 0.78rem;
+    color         : #c0b8e8;
+    line-height   : 1.5;
+}
+.stg-meta {
+    font-family   : 'IBM Plex Mono', monospace;
+    font-size     : 0.65rem;
+    color         : var(--muted);
+    margin-bottom : 0.3rem;
+}
+
+/* ── RAG Status Box (sidebar) ────────────────────────────── */
+.rag-status-ok {
+    background    : rgba(0,230,118,0.07);
+    border        : 1px solid rgba(0,230,118,0.25);
+    border-radius : 8px;
+    padding       : 0.6rem 0.9rem;
+    font-size     : 0.78rem;
+    color         : var(--green);
+    line-height   : 1.5;
+    font-family   : 'IBM Plex Mono', monospace;
+}
+.rag-status-warn {
+    background    : rgba(255,214,0,0.07);
+    border        : 1px solid rgba(255,214,0,0.3);
+    border-radius : 8px;
+    padding       : 0.6rem 0.9rem;
+    font-size     : 0.78rem;
+    color         : var(--yellow);
+    line-height   : 1.5;
+}
+.rag-status-err {
+    background    : rgba(255,77,109,0.07);
+    border        : 1px solid rgba(255,77,109,0.3);
+    border-radius : 8px;
+    padding       : 0.6rem 0.9rem;
+    font-size     : 0.78rem;
+    color         : var(--red);
+    line-height   : 1.5;
+}
+.rag-building {
+    background    : rgba(0,212,255,0.07);
+    border        : 1px solid rgba(0,212,255,0.25);
+    border-radius : 8px;
+    padding       : 0.6rem 0.9rem;
+    font-size     : 0.78rem;
+    color         : var(--accent);
+    line-height   : 1.5;
+    animation     : blink 1.5s infinite;
+}
+
+/* ── Emergency Banner ────────────────────────────────────── */
+.emergency-wrap {
+    background    : linear-gradient(135deg, #2a0010, #400018);
+    border        : 2px solid var(--red);
+    border-radius : 12px;
+    padding       : 1.1rem 1.5rem;
+    margin        : 0.8rem 0;
+    animation     : glow-red 2s infinite;
+}
+.emergency-wrap h3 { font-family:'IBM Plex Mono',monospace; color:var(--red); margin:0 0 0.5rem; }
+.emergency-wrap p  { color:#ffcdd2; margin:0; font-size:0.9rem; line-height:1.7; }
+
+/* ── Memory Tags ─────────────────────────────────────────── */
+.tag { display:inline-block; padding:3px 11px; border-radius:20px; font-size:0.72rem; font-family:'IBM Plex Mono',monospace; margin:2px 2px; }
+.tag-symptom { background:rgba(255,77,109,0.1);  border:1px solid rgba(255,77,109,0.35); color:#ff8fa3; }
+.tag-info    { background:rgba(0,212,255,0.08);  border:1px solid rgba(0,212,255,0.3);  color:var(--accent); }
+.tag-med     { background:rgba(0,230,118,0.08);  border:1px solid rgba(0,230,118,0.3);  color:var(--green); }
+
+/* ── Badges & Dots ───────────────────────────────────────── */
+.stage-badge { display:inline-block; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.35); border-radius:20px; padding:4px 14px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--accent); letter-spacing:1.5px; }
+.stage-badge.emergency { background:rgba(255,77,109,0.12); border-color:rgba(255,77,109,0.5); color:var(--red); animation:glow-red 1.5s infinite; }
+.dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+.dot-on  { background:var(--green); animation:blink 1.8s infinite; }
+.dot-off { background:var(--muted); }
+
+/* ── Inputs & Buttons ────────────────────────────────────── */
+.stTextArea textarea { background:var(--surface) !important; border:1px solid var(--border) !important; color:var(--text) !important; border-radius:10px !important; font-family:'IBM Plex Sans',sans-serif !important; font-size:0.91rem !important; resize:none !important; }
+.stTextArea textarea:focus { border-color:var(--accent) !important; box-shadow:0 0 12px rgba(0,212,255,0.18) !important; }
+.stButton > button { background:linear-gradient(135deg,var(--accent),var(--accent2)) !important; color:#000 !important; border:none !important; border-radius:9px !important; font-family:'IBM Plex Mono',monospace !important; font-weight:600 !important; font-size:0.82rem !important; letter-spacing:1.5px !important; padding:0.55rem 1.4rem !important; transition:all 0.2s ease !important; width:100% !important; }
+.stButton > button:hover { transform:translateY(-2px) !important; box-shadow:0 5px 18px rgba(0,212,255,0.3) !important; }
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+[data-testid="stSidebar"] { background:var(--surface) !important; border-right:1px solid var(--border) !important; }
+[data-testid="stSidebar"] .stMarkdown h3 { font-family:'IBM Plex Mono',monospace; font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:1rem 0 0.5rem; }
+
+/* ── Misc ─────────────────────────────────────────────────── */
+hr { border-color:var(--border) !important; margin:0.8rem 0 !important; }
+::-webkit-scrollbar       { width:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes glow-red { 0%,100%{box-shadow:0 0 12px rgba(255,77,109,0.3)} 50%{box-shadow:0 0 30px rgba(255,77,109,0.65)} }
+@keyframes blink    { 0%,100%{opacity:1} 50%{opacity:0.2} }

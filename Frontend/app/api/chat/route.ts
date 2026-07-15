@@ -1,42 +1,48 @@
-import {
-  streamText,
-  UIMessage,
-  convertToModelMessages,
-  createUIMessageStreamResponse,
-  toUIMessageStream,
-} from "ai"
+import { UIMessage } from "ai"
 
 export const maxDuration = 30
-
-const SYSTEM_PROMPT = `You are "AquaBot", the friendly AI assistant for Kanan Biotech Pvt. Ltd. (KBTech),
-a company that supports fish and shrimp farmers with aquaculture health, nutrition, and water management.
-
-Your job is to help farmers and visitors with:
-- Identifying and managing common aquaculture diseases (bacterial, viral, fungal, parasitic) in fish and shrimp.
-- Advice on seasonal disease risks and prevention/biosecurity practices.
-- Feed and nutrition guidance, feeding rates, and how to use the site's Feed Calculator.
-- Water quality parameters (pH, dissolved oxygen, ammonia, nitrite, temperature, salinity) and how to correct problems.
-- General pond and tank management best practices.
-
-Guidelines:
-- Be concise, practical, and easy to understand for farmers. Prefer short paragraphs and bullet points.
-- When symptoms are described, suggest likely causes and clear next steps, but recommend confirming with a
-  professional or KBTech expert before applying strong treatments.
-- Never invent specific KBTech product names, prices, or dosages you are not certain about. If asked about a
-  specific product, suggest they browse the Products page or use Farmer Connect to reach an expert.
-- If a question is unrelated to aquaculture or KBTech, politely steer the conversation back.
-- Always include a brief safety note when recommending chemical treatments or medications.`
 
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json()
 
-  const result = streamText({
-    model: "openai/gpt-4.1-mini",
-    system: SYSTEM_PROMPT,
-    messages: await convertToModelMessages(messages),
-  })
+  // Get the last message
+  const lastMessage = messages[messages.length - 1]
 
-  return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
-  })
+  // Prepare history for the backend (excluding the last message)
+  const history = messages.slice(0, -1).map(m => ({
+    role: m.role,
+    content: m.content
+  }))
+
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+    // Call the Main Backend Proxy which connects to RAG Backend
+    const response = await fetch(`${baseUrl}/api/ai/chat/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: lastMessage.content,
+        history: history
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to get AI response');
+    }
+
+    const data = await response.json();
+
+    // The AI SDK expect a specific stream or response format.
+    // Since our backend is currently non-streaming, we return a standard Response
+    // that the useChat hook can handle (it will treat it as a single chunk).
+    return new Response(data.reply);
+
+  } catch (error: any) {
+    console.error("Chat API Error:", error);
+    return new Response(error.message || "An error occurred", { status: 500 });
+  }
 }

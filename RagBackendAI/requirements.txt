@@ -1,0 +1,26 @@
+# --- Build Tools ---
+setuptools
+wheel
+
+# --- Django Core ---
+Django>=4.2.0
+django-cors-headers
+gunicorn
+whitenoise
+
+# --- LLM & API ---
+groq
+requests
+
+# --- RAG & AI (Optimized for Production) ---
+faiss-cpu
+fastembed
+numpy<2.0.0
+
+# --- Data Processing ---
+pdfplumber
+pandas
+openpyxl
+
+# --- Optional UI ---
+streamlit
