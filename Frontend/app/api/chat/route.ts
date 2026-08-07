@@ -1,48 +1,77 @@
-import { UIMessage } from "ai"
+import { cookies, headers } from "next/headers"
+import { decrypt } from "@/app/lib/sessions"
+
+function extractTextFromMessage(message: any): string {
+  if (typeof message.content === 'string' && message.content.trim().length > 0) {
+    return message.content;
+  }
+  if (Array.isArray(message.parts)) {
+    return message.parts
+      .filter((part: any) => part.type === 'text')
+      .map((part: any) => part.text)
+      .join("");
+  }
+  return String(message.content || "");
+}
 
 export const maxDuration = 30
 
+async function chatOwnerId() {
+  const session = await decrypt((await cookies()).get('session')?.value)
+  if (session?.user?.userId) return session.user.userId
+
+  const visitorId = (await headers()).get('x-chat-visitor-id') || ''
+  return /^[a-zA-Z0-9-]{8,100}$/.test(visitorId) ? `guest:${visitorId}` : null
+}
+
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json()
-
-  // Get the last message
-  const lastMessage = messages[messages.length - 1]
-
-  // Prepare history for the backend (excluding the last message)
-  const history = messages.slice(0, -1).map(m => ({
-    role: m.role,
-    content: m.content
-  }))
-
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const { messages } = await req.json()
+    const userId = await chatOwnerId()
+    if (!messages || messages.length === 0) {
+      return new Response("No messages provided", { status: 400 })
+    }
 
-    // Call the Main Backend Proxy which connects to RAG Backend
+    const lastMessage = messages[messages.length - 1]
+
+    const userText = extractTextFromMessage(lastMessage);
+
+    if (!userText.trim()) {
+        return new Response("Message content is required", { status: 400 })
+    }
+
+    // Prepare clean history for the backend
+    const history = messages.slice(0, -1).map((m: any) => ({
+        role: m.role,
+        content: extractTextFromMessage(m)
+    }));
+
+    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+    // Call the Main Backend Proxy
     const response = await fetch(`${baseUrl}/api/ai/chat/`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        message: lastMessage.content,
-        history: history
+        message: userText.trim(),
+        history: history,
+        user_id: userId,
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to get AI response');
+      const errorText = await response.text().catch(() => "Unknown error");
+      console.error("[Chat API] Backend Error:", errorText);
+      return new Response(`Expert System Error: ${response.status}`, { status: response.status });
     }
 
     const data = await response.json();
+    const replyText = data.reply || "I'm sorry, I couldn't process your aquaculture query.";
 
-    // The AI SDK expect a specific stream or response format.
-    // Since our backend is currently non-streaming, we return a standard Response
-    // that the useChat hook can handle (it will treat it as a single chunk).
-    return new Response(data.reply);
+    return Response.json({ reply: replyText });
 
   } catch (error: any) {
-    console.error("Chat API Error:", error);
-    return new Response(error.message || "An error occurred", { status: 500 });
+    console.error("[Chat API] Critical Error:", error);
+    return new Response("AquaBot service is temporarily unavailable", { status: 500 });
   }
 }

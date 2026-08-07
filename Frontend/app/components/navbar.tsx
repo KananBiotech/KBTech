@@ -30,7 +30,7 @@ export function Navbar() {
     })
   }
 
-  const navLinks = [
+  const navLinks: { name: string; href: string; hasDropdown?: boolean }[] = [
     { name: "Home", href: "/" },
     /*{ name: "Products", href: "/products", hasDropdown: true },*/
     { name: "Diseases", href: "/diseases" },

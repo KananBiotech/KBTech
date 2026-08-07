@@ -19,15 +19,16 @@ export async function decrypt(session: string | undefined = '') {
         const { payload } = await jwtVerify(session, encodedKey, {
             algorithms: ['HS256'],
         })
-        return payload
+        return payload as unknown as SessionPayload
     } catch (error) {
-        console.log('Failed to verify session')
+        // Suppress "Failed to verify session" logs for unauthenticated users to keep console clean
+        return null
     }
 }
 
-export async function createSession(email: string, password: string, userId: string, role: "admin" | "user") {
+export async function createSession(email: string, userId: string, role: "admin" | "user") {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const session = await encrypt({ expiresAt, user: { email, password, userId, role } })
+    const session = await encrypt({ expiresAt, user: { email, userId, role } })
     const cookieStore = await cookies()
 
     cookieStore.set('session', session, {

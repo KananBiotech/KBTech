@@ -16,6 +16,7 @@ function normalizeBackendErrors(errors: Record<string, string[]>) {
     farmType: errors.farm_type,
     email: errors.email,
     password: errors.password,
+    confirmPassword: errors.confirm_password,
   }
 }
 
@@ -84,7 +85,7 @@ export async function signup(formstate: FormState, formData: FormData) {
     }
   }
 
-  const session = await createSession(email, password, data?.session?.user_id, data?.session?.role)
+  const session = await createSession(email, data?.session?.user_id, data?.session?.role)
   await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/save_session/`, {
     session,
     userId: data?.session?.user_id
@@ -126,7 +127,7 @@ export async function login(formstate: FormState, formData: FormData) {
     }
   }
 
-  const session = await createSession(email as string, password as string, data?.session?.user_id, data?.session?.role)
+  const session = await createSession(email as string, data?.session?.user_id, data?.session?.role)
   await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/save_session/`, {
     session,
     userId: data?.session?.user_id

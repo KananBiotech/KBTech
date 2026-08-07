@@ -11,6 +11,7 @@ whitenoise
 # --- LLM & API ---
 groq
 requests
+pymongo[srv]>=4.10,<5
 
 # --- RAG & AI (Optimized for Production) ---
 faiss-cpu

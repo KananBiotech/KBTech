@@ -12,7 +12,6 @@ export type UserData = {
 export type SessionPayload = {
     expiresAt: Date
     user: {
-        password: string
         userId: string
         email: string
         role: "admin" | "user"

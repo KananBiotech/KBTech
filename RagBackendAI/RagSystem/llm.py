@@ -36,3 +36,33 @@ def get_response(client, conversation, rag_results=None, model=DEFAULT_MODEL):
 
     except Exception as e:
         return "", f"API Error: {str(e)}"
+
+
+def get_response_with_failover(api_keys, conversation, rag_results=None, model=DEFAULT_MODEL):
+    """Try configured Groq keys in order when a key is invalid or out of quota.
+
+    The keys themselves are never logged or returned to the caller.
+    """
+    keys = [key.strip() for key in api_keys if key and key.strip()]
+    if not keys:
+        return "", "No Groq API key is configured."
+
+    last_error = "Groq request failed."
+    for index, api_key in enumerate(keys, start=1):
+        client = create_client(api_key)
+        reply, error = get_response(client, conversation, rag_results, model)
+        if not error:
+            return reply, ""
+
+        last_error = error
+        error_text = error.lower()
+        # Authentication, expired/revoked keys and quota/rate-limit responses
+        # are safe to retry with the next configured key.
+        can_fail_over = any(marker in error_text for marker in (
+            '401', '403', '429', 'authentication', 'api key', 'invalid key',
+            'expired', 'revoked', 'quota', 'rate limit', 'rate_limit', 'credit',
+        ))
+        if not can_fail_over or index == len(keys):
+            break
+
+    return "", last_error

@@ -12,3 +12,4 @@ typing_extensions==4.15.0
 gunicorn
 tzdata==2025.3
 requests==2.32.3
+pymongo[srv]>=4.10,<5

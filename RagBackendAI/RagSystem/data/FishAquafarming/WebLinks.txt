@@ -1,7 +1,31 @@
-Fish Aquafarming and Aquaculture Knowledge Base
+Fish Aquafarming and Aquaculture Agriculture Knowledge Base
+
+Expert Knowledge Blocks for Daily Guidance:
+
+[Pond Preparation & Soil]
+- Soil pH: Ideal range is 6.5 to 7.5. For acidic soils, apply lime at a rate of 200-500 kg/ha depending on acidity.
+- Water Depth: Maintain a minimum of 1.2 to 1.5 meters to ensure temperature stability and oxygen retention.
+
+[Water Quality Parameters]
+- Dissolved Oxygen (DO): Should be above 5.0 mg/L. Below 3.0 mg/L causes stress; below 1.0 mg/L leads to mortality.
+- Ammonia (NH3): Toxic levels start above 0.05 mg/L. Use probiotics or zeolite to reduce high ammonia.
+- pH Stability: Monitor pH daily. Drastic shifts (more than 0.5 units) can cause fish stress and death.
+
+[Seasonal Health Management]
+- Summer: High temperatures reduce oxygen solubility. Increase aeration and reduce feeding during peak heat hours.
+- Monsoon: Sudden rains can cause pH crashes. Check alkalinity and apply lime after heavy rains.
+- Winter: Slow metabolism. Reduce feed quantity by 30-50% and use high-protein, easy-to-digest pellets.
+
+[Common Diseases & Solutions]
+- White Spot (Ich): Caused by Ichthyophthirius multifiliis. Treat with Salt (2-3 ppt) or Potassium Permanganate.
+- Fin Rot: Bacterial infection. Improve water quality and use anti-bacterial treatments like AquaGuard.
+- EUS (Epizootic Ulcerative Syndrome): Deep ulcers. Use lime (CIFAULCER) and avoid high stocking densities.
+
+[Agricultural Integration]
+- Aquaponics: Use fish waste water to grow leafy greens. This naturally filters the water for the fish.
+- Feed Efficiency: Use the FCR (Feed Conversion Ratio) to monitor profitability. Aim for an FCR of 1.2 to 1.5.
+
+Official Sources:
 - FAO Aquaculture: http://www.fao.org/aquaculture/en/
 - World Aquaculture Society: https://www.was.org/
-- Sustainable Aquaculture: https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/sustainable-aquaculture
-- Common Fish Diseases: https://www.merckvetmanual.com/exotic-and-laboratory-animals/aquarium-fish/management-and-diseases-of-aquarium-fish
-- Pond Management Guide: https://extension.psu.edu/management-of-fish-ponds-in-pennsylvania
-- Water Quality for Aquaculture: https://www.ctsa.org/files/publications/WaterQualityGuide.pdf
+- Sustainable Aquaculture Research: https://www.sciencedirect.com/topics/sustainable-aquaculture
