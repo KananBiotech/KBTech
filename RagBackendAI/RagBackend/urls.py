@@ -20,6 +20,11 @@ from .api import chat_with_rag, get_rag_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Keep the canonical slash URL, but also accept clients (such as Postman)
+    # that send POST /api/chat without a trailing slash.  CommonMiddleware
+    # cannot redirect a POST while preserving its body when APPEND_SLASH is
+    # enabled, which otherwise turns this simple URL typo into a 500 error.
+    path('api/chat', chat_with_rag, name='chat_with_rag_no_slash'),
     path('api/chat/', chat_with_rag, name='chat_with_rag'),
     path('api/status/', get_rag_status, name='get_rag_status'),
 ]

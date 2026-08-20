@@ -13,23 +13,37 @@ def load_dataset(pdf_dir: str, web_links_file: str) -> list[dict]:
 
     # 1. Load PDFs
     if os.path.exists(pdf_dir):
-        pdf_files = [f for f in os.listdir(pdf_dir) if f.lower().endswith('.pdf')]
-        for pdf_file in pdf_files:
-            pdf_path = os.path.join(pdf_dir, pdf_file)
-            print(f"[RAG Loader] Loading PDF: {pdf_file}")
-            all_pages.extend(load_pdf(pdf_path, source_name=pdf_file))
+        # Walk recursively so each topic can keep its own PDF folder.
+        for root, _, files in os.walk(pdf_dir):
+            for pdf_file in sorted(files):
+                if not pdf_file.lower().endswith('.pdf'):
+                    continue
+                pdf_path = os.path.join(root, pdf_file)
+                relative_source = os.path.relpath(pdf_path, pdf_dir)
+                print(f"[RAG Loader] Loading PDF: {relative_source}")
+                all_pages.extend(load_pdf(pdf_path, source_name=relative_source))
 
     # 2. Load WebLinks file
-    if os.path.exists(web_links_file):
-        print(f"[RAG Loader] Loading WebLinks: {web_links_file}")
-        with open(web_links_file, 'r', encoding='utf-8', errors='ignore') as f:
+    if os.path.isdir(web_links_file):
+        link_files = []
+        for root, _, files in os.walk(web_links_file):
+            link_files.extend(os.path.join(root, name) for name in files
+                              if name.lower() == 'weblinks.txt')
+    elif os.path.isfile(web_links_file):
+        link_files = [web_links_file]
+    else:
+        link_files = []
+
+    for links_path in sorted(link_files):
+        print(f"[RAG Loader] Loading WebLinks: {links_path}")
+        with open(links_path, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
-            if content.strip():
-                all_pages.append({
-                    "page": "Web",
-                    "text": _clean_text(content),
-                    "source": "WebLinks.txt"
-                })
+        if content.strip():
+            all_pages.append({
+                "page": "Web",
+                "text": _clean_text(content),
+                "source": os.path.relpath(links_path, pdf_dir)
+            })
 
     # 3. Load New Data from Excel Cache (Dynamic Learning)
     if os.path.exists(EXCEL_CACHE_FILE):

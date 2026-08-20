@@ -24,22 +24,25 @@ CSS_FILE = "ui/style.css"
 
 # ── Groq Models ───────────────────────────────────────────────
 AVAILABLE_MODELS = {
-    "llama-3.1-8b-instant"    : "Llama 3.1 8B — Requested ⚡",
-    "llama-3.3-70b-versatile" : "Llama 3.3 70B — Best Quality ⭐",
-    "llama3-70b-8192"         : "Llama 3 70B   — Great Quality",
-    "llama3-8b-8192"          : "Llama 3 8B    — Fastest ⚡",
+    "openai/gpt-oss-20b"       : "GPT OSS 20B — Fast ⚡",
+    "openai/gpt-oss-120b"      : "GPT OSS 120B — Best Quality ⭐",
+    "qwen/qwen3.6-27b"         : "Qwen 3.6 27B — Strong Quality",
 }
-DEFAULT_MODEL      = "llama-3.1-8b-instant"
+# The former Llama models were retired by Groq and now return HTTP 404.
+DEFAULT_MODEL      = "openai/gpt-oss-20b"
 
 # ── LLM Parameters ────────────────────────────────────────────
 MAX_TOKENS          = 2000
 TEMPERATURE         = 0.2
 
 # ── RAG Configuration ─────────────────────────────────────────
-# Dataset Paths
-DATA_DIR           = RAG_BASE_DIR / "data" / "FishAquafarming"
-PDF_DIR            = DATA_DIR / "PDF"
-WEB_LINKS_FILE     = DATA_DIR / "WebLinks.txt"
+# Dataset Paths.  The loader scans every topic folder below DATA_ROOT, so
+# FishAquafarming and any additional downloaded knowledge (such as
+# BacterialLeafBlight) are indexed together.
+DATA_ROOT          = RAG_BASE_DIR / "data"
+DATA_DIR           = DATA_ROOT / "FishAquafarming"  # legacy cache location
+PDF_DIR            = DATA_ROOT
+WEB_LINKS_FILE     = DATA_ROOT
 
 # Storage for User Queries & AI Answers
 EXCEL_CACHE_FILE   = DATA_DIR / "ChatHistory_Cache.xlsx"
