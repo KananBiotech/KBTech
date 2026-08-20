@@ -1,4 +1,4 @@
-Backend URL : https://kbtech-2.onrender.com
+Backend URL : https://kbtech-1-nuvh.onrender.com  -- Kaberi Account
 
 Frontend URL : https://kb-tech.vercel.app
 
