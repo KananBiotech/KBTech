@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .api import chat_with_rag, get_rag_status
+from .api import chat_with_rag, get_rag_status, health_check
 
 urlpatterns = [
+    # Render probes this path (including with HEAD) to confirm the service is up.
+    path('', health_check, name='health_check'),
+    path('health/', health_check, name='health_check_explicit'),
     path('admin/', admin.site.urls),
     # Keep the canonical slash URL, but also accept clients (such as Postman)
     # that send POST /api/chat without a trailing slash.  CommonMiddleware

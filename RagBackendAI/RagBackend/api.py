@@ -20,6 +20,11 @@ from RagSystem.llm import get_response_with_failover
 _pipeline = None
 
 
+def health_check(request):
+    """Small, dependency-free endpoint for Render's health checks."""
+    return JsonResponse({'status': 'ok'})
+
+
 @lru_cache(maxsize=1)
 def get_mongo_database():
     uri = os.getenv('MONGODB_URI') or os.getenv('MONGO_URI') or os.getenv('MongoURI')
